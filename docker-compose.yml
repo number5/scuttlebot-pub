@@ -1,0 +1,22 @@
+version: '2'
+
+volumes:
+  ssb_data:
+    external: true
+
+services:
+  scuttlebot:
+    build: .
+    ports:
+      - "8008:8008"
+    environment:
+      ssb_host: 'pub.nb5.me'
+      ssb_pub: 'true'
+      ssb_local: 'false'
+      ssb_gossip__connections: 5
+      ssb_path: /ssb-data
+    command: [sbot, server, --host, pub.nb5.me]
+    network_mode: "host"
+    volumes:
+      - ssb_data:/ssb-data
+    restart: always
